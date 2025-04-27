@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://j6krhlvxfb41"]
+
+[ext_resource type="Script" path="res://jelly_fish.gd" id="1_6xyot"]
+[ext_resource type="Texture2D" uid="uid://fk6xq3n1u6c3" path="res://jell_fish.png" id="1_ajwu3"]
+[ext_resource type="AudioStream" uid="uid://ncfff2pcsdsq" path="res://162808__timgormly__spaceship_2.wav" id="3_8dfpm"]
+[ext_resource type="AudioStream" uid="uid://dccbev6mgqarq" path="res://destroyed.wav" id="4_csheh"]
+
+[sub_resource type="Animation" id="Animation_ub1rq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5fejm"]
+resource_name = "animation"
+length = 1.00005
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ju61a"]
+_data = {
+"RESET": SubResource("Animation_ub1rq"),
+"animation": SubResource("Animation_5fejm")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_df5j8"]
+size = Vector2(56, 52)
+
+[node name="JellyFish" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_6xyot")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ajwu3")
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ju61a")
+}
+autoplay = "animation"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_df5j8")
+
+[node name="DeleteDelay" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_8dfpm")
+autoplay = true
+
+[node name="LaserHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_csheh")
+volume_db = -10.0
+
+[connection signal="timeout" from="DeleteDelay" to="." method="_on_delete_delay_timeout"]

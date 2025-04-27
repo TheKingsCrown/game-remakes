@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6kw7lq8wl6ks"]
+
+[ext_resource type="Texture2D" uid="uid://b7qehsvdoqkj" path="res://cell_tileset.png" id="1_5ynw2"]
+[ext_resource type="Script" path="res://Levels/level.gd" id="1_uk5oa"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g5jyp"]
+texture = ExtResource("1_5ynw2")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_cxs3c"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = ""
+custom_data_layer_0/type = 0
+sources/0 = SubResource("TileSetAtlasSource_g5jyp")
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_uk5oa")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_top = 0.9
+anchor_right = 0.43
+anchor_bottom = 1.0
+offset_top = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0.0313726, 0.0784314, 0.839216)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 10
+toggle_mode = true
+text = "Start Simulation"
+
+[node name="CellMap" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_cxs3c")
+format = 2
+
+[node name="CreateNextGenDelay" type="Timer" parent="."]
+
+[connection signal="toggled" from="CanvasLayer/MarginContainer/HBoxContainer/Button" to="." method="_on_button_toggled"]
+[connection signal="timeout" from="CreateNextGenDelay" to="." method="_on_create_next_gen_delay_timeout"]

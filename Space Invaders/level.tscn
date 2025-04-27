@@ -1,0 +1,174 @@
+[gd_scene load_steps=10 format=3 uid="uid://b80gtrr3tlhtj"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_4v3h2"]
+[ext_resource type="AudioStream" uid="uid://bxo3via7y0mqj" path="res://move1.wav" id="2_38lyi"]
+[ext_resource type="AudioStream" uid="uid://dccbev6mgqarq" path="res://destroyed.wav" id="2_rdhx0"]
+[ext_resource type="AudioStream" uid="uid://cjnmbkv5jk7xp" path="res://move2.wav" id="3_c6fo1"]
+
+[sub_resource type="Animation" id="Animation_olbll"]
+length = 0.001
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Intructions:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_nqctj"]
+resource_name = "flash_text"
+length = 1.00003
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Intructions:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kyuhm"]
+_data = {
+"RESET": SubResource("Animation_olbll"),
+"flash_text": SubResource("Animation_nqctj")
+}
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_osikt"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ync5x"]
+normal = Vector2(-1, 0)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_4v3h2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.0235294, 0.0745098, 1)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Intructions" type="Label" parent="CanvasLayer"]
+offset_left = 580.0
+offset_top = 619.0
+offset_right = 730.0
+offset_bottom = 642.0
+text = "Press Enter to Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer"]
+offset_left = -8.0
+offset_top = 656.0
+offset_right = 142.0
+offset_bottom = 679.0
+text = "Score:
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScore" type="Label" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 680.0
+offset_right = 158.0
+offset_bottom = 703.0
+text = "High Score:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Lives" type="Label" parent="CanvasLayer"]
+offset_left = 1096.0
+offset_top = 688.0
+offset_right = 1246.0
+offset_bottom = 711.0
+text = "Lives:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_kyuhm")
+}
+autoplay = "flash_text"
+
+[node name="Borders" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 3
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="LeftBorder" type="CollisionShape2D" parent="Borders"]
+position = Vector2(-1, 284)
+shape = SubResource("WorldBoundaryShape2D_osikt")
+metadata/_edit_group_ = true
+
+[node name="RightBorder" type="CollisionShape2D" parent="Borders"]
+position = Vector2(1281, 287)
+shape = SubResource("WorldBoundaryShape2D_ync5x")
+metadata/_edit_group_ = true
+
+[node name="Projectiles" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="Enemies" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="SpawnPositions" type="Node2D" parent="."]
+
+[node name="PlayerSpawn" type="Marker2D" parent="SpawnPositions"]
+position = Vector2(640, 660)
+
+[node name="EnemySpawn1" type="Marker2D" parent="SpawnPositions"]
+position = Vector2(400, 200)
+
+[node name="MotherShipSpawn1" type="Marker2D" parent="SpawnPositions"]
+position = Vector2(0, 100)
+
+[node name="MoveDelay" type="Timer" parent="."]
+wait_time = 0.06
+autostart = true
+
+[node name="AttemptJellySpawn" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="PlayerRespawnDelay" type="Timer" parent="."]
+one_shot = true
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Move1" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("2_38lyi")
+volume_db = -10.0
+
+[node name="Move2" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_c6fo1")
+volume_db = -10.0
+
+[node name="LaserHit" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("2_rdhx0")
+volume_db = -10.0
+
+[connection signal="timeout" from="MoveDelay" to="." method="_on_move_delay_timeout"]
+[connection signal="timeout" from="AttemptJellySpawn" to="." method="_on_attempt_jelly_spawn_timeout"]
+[connection signal="timeout" from="PlayerRespawnDelay" to="." method="_on_player_respawn_delay_timeout"]

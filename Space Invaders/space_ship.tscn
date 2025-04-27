@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dk1fxmrq35vfq"]
+
+[ext_resource type="Script" path="res://space_ship.gd" id="1_0vt28"]
+[ext_resource type="Texture2D" uid="uid://c3xnx56u5imvj" path="res://space_ship.png" id="1_h7ipx"]
+[ext_resource type="AudioStream" uid="uid://dccbev6mgqarq" path="res://destroyed.wav" id="3_05cn1"]
+[ext_resource type="AudioStream" uid="uid://djaqeygd2aens" path="res://laser_shoot.wav" id="4_r7701"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mkbxk"]
+size = Vector2(50, 70)
+
+[node name="SpaceShip" type="CharacterBody2D"]
+z_index = 1
+collision_mask = 13
+script = ExtResource("1_0vt28")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("1_h7ipx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_mkbxk")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -34)
+
+[node name="LaserShot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_r7701")
+
+[node name="LaserHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_05cn1")

@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5umsabhwrvpv"]
+
+[ext_resource type="Script" path="res://laser.gd" id="1_0ree6"]
+[ext_resource type="Texture2D" uid="uid://bh3qdpgwv4nis" path="res://laser.png" id="1_qkqfg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycs6p"]
+size = Vector2(2.99776, 24)
+
+[sub_resource type="Animation" id="Animation_2156v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_lxf10"]
+resource_name = "animation"
+length = 1.5
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jjhg2"]
+_data = {
+"RESET": SubResource("Animation_2156v"),
+"animation": SubResource("Animation_lxf10")
+}
+
+[node name="Laser" type="Area2D"]
+texture_filter = 1
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_0ree6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qkqfg")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ycs6p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jjhg2")
+}
+autoplay = "animation"
+
+[node name="DestroyDelay" type="Timer" parent="."]
+wait_time = 1.7
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="DestroyDelay" to="." method="_on_destroy_delay_timeout"]

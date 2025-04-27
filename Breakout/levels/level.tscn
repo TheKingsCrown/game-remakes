@@ -1,0 +1,474 @@
+[gd_scene load_steps=9 format=3 uid="uid://o4bxuivgi21"]
+
+[ext_resource type="Script" path="res://levels/level.gd" id="1_8x7e6"]
+[ext_resource type="PackedScene" uid="uid://daw7irxeb5vmr" path="res://Objects/ball.tscn" id="1_vjhbj"]
+[ext_resource type="PackedScene" uid="uid://dbm36pf37lyoc" path="res://Objects/brick.tscn" id="3_kqxvo"]
+[ext_resource type="PackedScene" uid="uid://dyup6sbydmf8o" path="res://Characters/player.tscn" id="3_v81e5"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8c1pe"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oysm4"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0o28j"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m6nck"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_8x7e6")
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+self_modulate = Color(0, 0.0196078, 0.0823529, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="CurrentScore" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Current Score: 0"
+
+[node name="HighScore" type="Label" parent="CanvasLayer"]
+offset_top = 24.0
+offset_right = 101.0
+offset_bottom = 47.0
+text = "High Score: 0"
+
+[node name="Lives" type="Label" parent="CanvasLayer"]
+offset_left = 1064.0
+offset_top = 8.0
+offset_right = 1165.0
+offset_bottom = 31.0
+text = "Lives: 3"
+
+[node name="Ball" parent="." instance=ExtResource("1_vjhbj")]
+position = Vector2(565, 580)
+metadata/_edit_lock_ = true
+
+[node name="Borders" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="LeftBorder" type="StaticBody2D" parent="Borders"]
+position = Vector2(-1, 649)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/LeftBorder"]
+shape = SubResource("WorldBoundaryShape2D_8c1pe")
+
+[node name="UpperBorder" type="StaticBody2D" parent="Borders"]
+position = Vector2(-1, -1)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/UpperBorder"]
+shape = SubResource("WorldBoundaryShape2D_oysm4")
+
+[node name="RightBorder" type="StaticBody2D" parent="Borders"]
+position = Vector2(1153, 649)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/RightBorder"]
+shape = SubResource("WorldBoundaryShape2D_0o28j")
+
+[node name="LowerBorder" type="StaticBody2D" parent="Borders"]
+position = Vector2(1153, 649)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/LowerBorder"]
+shape = SubResource("WorldBoundaryShape2D_m6nck")
+
+[node name="Player" parent="." instance=ExtResource("3_v81e5")]
+position = Vector2(565, 600)
+
+[node name="Bricks" type="Node2D" parent="."]
+position = Vector2(849, 406)
+scale = Vector2(0.9, 0.9)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="PinkLayer" type="Node2D" parent="Bricks"]
+modulate = Color(1, 0.435294, 0.878431, 1)
+position = Vector2(0, 20)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Brick" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick2" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick3" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick4" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick5" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick6" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick7" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick8" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick9" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick10" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick11" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick12" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick13" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick14" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick15" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick16" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick17" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick18" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick19" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick20" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick21" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick22" parent="Bricks/PinkLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -353.333)
+scale = Vector2(1, 1)
+
+[node name="GreenLayer" type="Node2D" parent="Bricks"]
+modulate = Color(0.105882, 0.509804, 0, 1)
+position = Vector2(-1.11111, 75.5556)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Brick" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick2" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick3" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick4" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick5" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick6" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick7" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick8" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick9" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick10" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick11" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick12" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick13" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick14" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick15" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick16" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick17" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick18" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick19" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick20" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick21" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick22" parent="Bricks/GreenLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -353.333)
+scale = Vector2(1, 1)
+
+[node name="BlueLayer" type="Node2D" parent="Bricks"]
+modulate = Color(0.0117647, 0.427451, 0.811765, 1)
+position = Vector2(-1.11111, 128.889)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Brick" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick2" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick3" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick4" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick5" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick6" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick7" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick8" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick9" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick10" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick11" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick12" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick13" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick14" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick15" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick16" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick17" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick18" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick19" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick20" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick21" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick22" parent="Bricks/BlueLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -353.333)
+scale = Vector2(1, 1)
+
+[node name="YellowLayer" type="Node2D" parent="Bricks"]
+modulate = Color(0.823529, 0.823529, 0, 1)
+position = Vector2(-1.11111, 182.222)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="Brick" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick2" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick3" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick4" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick5" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick6" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick7" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick8" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick9" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick10" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick11" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -380)
+scale = Vector2(1, 1)
+
+[node name="Brick12" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-836.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick13" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-730, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick14" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-623.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick15" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-516.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick16" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-410, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick17" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-303.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick18" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-196.667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick19" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(-90, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick20" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(16.6667, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick21" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(123.333, -353.333)
+scale = Vector2(1, 1)
+
+[node name="Brick22" parent="Bricks/YellowLayer" instance=ExtResource("3_kqxvo")]
+position = Vector2(230, -353.333)
+scale = Vector2(1, 1)
+
+[connection signal="body_entered" from="Ball" to="." method="_on_ball_body_entered"]

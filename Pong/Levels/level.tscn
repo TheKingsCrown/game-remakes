@@ -1,0 +1,142 @@
+[gd_scene load_steps=11 format=3 uid="uid://dnxn1api2p7m2"]
+
+[ext_resource type="Script" path="res://Levels/level.gd" id="1_f63eg"]
+[ext_resource type="PackedScene" uid="uid://0ob2aatmjcxb" path="res://Characters/paddle.tscn" id="1_ntu2p"]
+[ext_resource type="PackedScene" uid="uid://daw7irxeb5vmr" path="res://Objects/ball.tscn" id="2_cutxc"]
+[ext_resource type="PackedScene" uid="uid://drx3idjk7xty5" path="res://Characters/paddle_2.tscn" id="3_asx8k"]
+[ext_resource type="AudioStream" uid="uid://dxu2ooblk8n56" path="res://wall_hit.wav" id="5_yv0ly"]
+[ext_resource type="AudioStream" uid="uid://bj2u4rlj5ggv1" path="res://score.wav" id="6_xddi4"]
+[ext_resource type="AudioStream" uid="uid://bk6k54kq6d4du" path="res://paddle_hit.wav" id="7_gu3nc"]
+
+[sub_resource type="Theme" id="Theme_1ecyq"]
+default_font_size = 100
+
+[sub_resource type="Theme" id="Theme_lwhyo"]
+default_font_size = 50
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_h0ui4"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_f63eg")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.0313726, 0.0588235, 1)
+metadata/_edit_lock_ = true
+
+[node name="Player1Score" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.0
+offset_top = -245.0
+offset_right = -24.0
+offset_bottom = -108.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_1ecyq")
+text = "0"
+
+[node name="Player2Score" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = -246.0
+offset_right = 189.0
+offset_bottom = -109.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_1ecyq")
+text = "0"
+
+[node name="Text" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -186.0
+offset_top = -109.0
+offset_right = 145.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = SubResource("Theme_lwhyo")
+text = "Press enter to serve"
+
+[node name="Player1" parent="." instance=ExtResource("1_ntu2p")]
+position = Vector2(50, 325)
+metadata/_edit_lock_ = true
+
+[node name="Player2" parent="." instance=ExtResource("3_asx8k")]
+position = Vector2(1092, 325)
+metadata/_edit_lock_ = true
+
+[node name="BoundingBox" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="UpperBound" type="StaticBody2D" parent="BoundingBox"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundingBox/UpperBound"]
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_h0ui4")
+
+[node name="LowerBound" type="StaticBody2D" parent="BoundingBox"]
+position = Vector2(0, 648)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundingBox/LowerBound"]
+shape = SubResource("WorldBoundaryShape2D_h0ui4")
+
+[node name="LeftGoal" type="Area2D" parent="BoundingBox"]
+position = Vector2(0, 648)
+collision_mask = 2
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundingBox/LeftGoal"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_h0ui4")
+
+[node name="RightGoal" type="Area2D" parent="BoundingBox"]
+position = Vector2(1152, 648)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BoundingBox/RightGoal"]
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_h0ui4")
+
+[node name="Ball" parent="." instance=ExtResource("2_cutxc")]
+position = Vector2(565, 325)
+
+[node name="wall_hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_yv0ly")
+
+[node name="score" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_xddi4")
+
+[node name="paddle_hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_gu3nc")
+
+[connection signal="area_entered" from="BoundingBox/LeftGoal" to="." method="_on_left_goal_area_entered"]
+[connection signal="area_entered" from="BoundingBox/RightGoal" to="." method="_on_right_goal_area_entered"]
+[connection signal="body_entered" from="Ball" to="." method="_on_ball_body_entered"]
